@@ -1,5 +1,7 @@
-Name,Quantity,Price,Category,InitialQuantity
-Milk,5,1.5,Dairy,10
-Rice,50,0.9,Grains,50
-potato,53,1.43,Grains,53
-tomato,20,4.9,Grains,20
+==== Данные о продуктах ====
+Название             Количество Цена       Категория       Начальное количество
+-------------------------------------------------------------
+Milk                 5          1,50       Dairy           10             
+Rice                 40         0,90       Grains          50             
+potato               53         1,43       Grains          53             
+tomato               20         4,90       Grains          20             
