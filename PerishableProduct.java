@@ -13,9 +13,9 @@ public class PerishableProduct extends Product {
     @Override
     public void checkExpiry() {
         if (expirationDate.isBefore(LocalDate.now())) {
-            System.out.println("Продукт " + getName() + " просрочен!");
+            System.out.println("Product " + getName() + " expired!");
         } else {
-            System.out.println("Продукт " + getName() + " годен до " + getExpirationDate());
+            System.out.println("Product " + getName() + " will expire " + getExpirationDate());
         }
     }
 }

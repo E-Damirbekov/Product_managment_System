@@ -59,6 +59,6 @@ public abstract class Product {
     public abstract void checkExpiry();
 
     public void displayProductInfo() {
-        System.out.println("Название: " + name + ", Категория: " + category + ", Количество: " + quantity + ", Цена: " + price);
+        System.out.println("Name: " + name + ", Category: " + category + ", Quantity: " + quantity + ", Price: " + price);
     }
 }

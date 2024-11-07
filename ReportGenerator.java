@@ -9,17 +9,17 @@ public class ReportGenerator implements ReportActions{
     public void generateSalesReport() {
         double totalRevenue = 0;
 
-        System.out.println("Отчет по продажам:");
+        System.out.println("Sells Report:");
         for (Product product : inventory.getProducts()) {
             int soldQuantity = product.getInitialQuantity() - product.getQuantity();
             double revenue = soldQuantity * product.getPrice();
             totalRevenue += revenue;
 
-            System.out.println("Продукт: " + product.getName() +
-                    ", Продано: " + soldQuantity +
-                    ", Выручка: " + revenue);
+            System.out.println("Product: " + product.getName() +
+                    ", Sold: " + soldQuantity +
+                    ", Revenue: " + revenue);
         }
 
-        System.out.println("Общая выручка: " + totalRevenue);
+        System.out.println("Total Revenue: " + totalRevenue);
     }
 }

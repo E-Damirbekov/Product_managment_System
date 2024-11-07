@@ -15,7 +15,7 @@ public class InventoryManager implements InventoryActions {
     // Метод для добавления нового продукта
     public void addProduct(Product product) {
         products.add(product);
-        transactionHistory.add("Добавлен продукт: " + product.getName() + " (Категория: " + product.getCategory() + ")");
+        transactionHistory.add("Product added: " + product.getName() + " (Category: " + product.getCategory() + ")");
 
     }
 
@@ -43,21 +43,21 @@ public class InventoryManager implements InventoryActions {
                     product.setQuantity(product.getQuantity() - soldQuantity);
                     double revenue = soldQuantity * product.getPrice();
                     // Добавляем запись о транзакции
-                    transactionHistory.add("Продажа продукта: " + name + " (Количество: " + soldQuantity + ", Выручка: " + revenue + ")");
+                    transactionHistory.add("Product sold: " + name + " (Quantity: " + soldQuantity + ", Revenue: " + revenue + ")");
                     return;
                 } else {
-                    System.out.println("Недостаточно товара на складе.");
+                    System.out.println("Not enough goods in stock.");
                     return;
                 }
             }
-        }System.out.println("Продукт не найден.");
+        }System.out.println("Product not found.");
     }
 
     public void saveProductsToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("==== Данные о продуктах ====\n");
+            writer.write("==== Product data ====\n");
             writer.write(String.format("%-20s %-10s %-10s %-15s %-15s%n",
-                    "Название", "Количество", "Цена", "Категория", "Начальное количество"));
+                    "Name", "Quantity", "Price", "Category", "Initial quantity"));
             writer.write("-------------------------------------------------------------\n");  // Заголовок
             for (Product product : products) {
                 writer.write(String.format("%-20s %-10d %-10.2f %-15s %-15d%n",
@@ -67,9 +67,9 @@ public class InventoryManager implements InventoryActions {
                         product.getCategory(),
                         product.getInitialQuantity()));
             }
-            System.out.println("Данные о продуктах сохранены в файл: " + filename);
+            System.out.println("Product data saved to file:" + filename);
         } catch (IOException e) {
-            System.out.println("Ошибка при сохранении данных о продуктах: " + e.getMessage());
+            System.out.println("Error saving product data:" + e.getMessage());
         }
     }
 
@@ -79,15 +79,15 @@ public class InventoryManager implements InventoryActions {
             for (String transaction : transactionHistory) {
                 writer.write(transaction + "\n");
             }
-            System.out.println("История транзакций сохранена в файл: " + filename);
+            System.out.println("Transaction history saved to file: " + filename);
         } catch (IOException e) {
-            System.out.println("Ошибка при сохранении истории транзакций: " + e.getMessage());
+            System.out.println("Error saving transaction history: "+ e.getMessage());
         }
     }
 
     // Метод для отображения всех продуктов
     public void displayProducts() {
-        System.out.println("Список продуктов:");
+        System.out.println("List of products:");
         for (Product product : products) {
             product.displayProductInfo();
         }
@@ -97,7 +97,7 @@ public class InventoryManager implements InventoryActions {
     public void checkLowStock(int threshold) {
         for (Product product : products) {
             if (product.getQuantity() < threshold) {
-                System.out.println("Низкий уровень запаса: " + product.getName());
+                System.out.println("Low stock level:" + product.getName());
             }
         }
     }
@@ -110,7 +110,7 @@ public class InventoryManager implements InventoryActions {
                 return;
             }
         }
-        System.out.println("Продукт не найден.");
+        System.out.println("Product not found.");
     }
 
     public ArrayList<Product> getProducts() {
