@@ -14,7 +14,7 @@ public class InventoryManager implements InventoryActions {
 
     public void addProduct(Product product) {
         products.add(product);
-        transactionHistory.add("|Product added|" + " ID:"+ product.getId() +" Name;"+ product.getName() + " (Category: " + product.getCategory() + ")");
+        transactionHistory.add("|Product added|" + " ID:"+ product.getId() +" Name:"+ product.getName() + " (Category: " + product.getCategory() + ")");
 
     }
 

@@ -5,5 +5,5 @@ Transaction History:
 |Product added| ID:4 Name;tomato (Category: Grains)
 |Product was Updated| New Name:Milk (Amount was: 10 Amount now: 5, Price: 1.5)
 |Product was Updated| New Name:Milk (Amount was: 5 Amount now: 2, Price: 1.5)
-|Product sold| Id:1 Name Milk (Quantity: 1, Revenue: 1.5)
+|Product sold| ID:1 Name Milk (Quantity: 1, Revenue: 1.5)
 |Product was reinforced| ID:1 Name: MilkAmount was: 1 Amount added: 23
