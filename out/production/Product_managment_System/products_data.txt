@@ -1,7 +1,7 @@
 ==== Product data ====
-ID         Name                 Quantity   Price      Category        Initial Quantity    
-----------------------------------------------------------------------
-1          Milk                 24         1,50       Dairy           10                  
-2          Rice                 50         0,90       Grains          50                  
-3          potato               53         1,43       Grains          53                  
-4          tomato               20         4,90       Grains          20                  
+ID         Name                 Quantity   Price      Category        Initial Quantity     ExpiryStartDate      ExpiryEndDate       
+------------------------------------------------------------------------------------------------------
+1          Milk                 24         1,50       Dairy           10                   2024-11-13           2024-12-01          
+2          Rice                 50         0,90       Grains          50                   2024-11-13           1111-11-11          
+3          potato               53         1,43       Grains          53                   2024-11-13           1111-11-11          
+4          tomato               20         4,90       Grains          20                   2024-11-13           1111-11-11          

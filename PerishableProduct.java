@@ -7,8 +7,14 @@ public class PerishableProduct extends Product {
         super(name,quantity, price, category);
         this.expirationDate = expirationDate;
     }
-
-    public LocalDate getExpirationDate() { return expirationDate; }
+    @Override
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+    @Override
+    public LocalDate getCurrentDate(){
+        return LocalDate.now();
+    }
 
     @Override
     public void checkExpiry() {

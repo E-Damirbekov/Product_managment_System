@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
@@ -54,18 +55,20 @@ public class InventoryManager implements InventoryActions {
     public void saveProductsToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("==== Product data ====\n");
-            writer.write(String.format("%-10s %-20s %-10s %-10s %-15s %-20s%n",
-                    "ID", "Name", "Quantity", "Price", "Category", "Initial Quantity"));
-            writer.write("----------------------------------------------------------------------\n");
+            writer.write(String.format("%-10s %-20s %-10s %-10s %-15s %-20s %-20s %-20s%n",
+                    "ID", "Name", "Quantity", "Price", "Category", "Initial Quantity","ExpiryStartDate","ExpiryEndDate"));
+            writer.write("------------------------------------------------------------------------------------------------------\n");
 
             for (Product product : products) {
-                writer.write(String.format("%-10s %-20s %-10d %-10.2f %-15s %-20d%n",
+                writer.write(String.format("%-10d %-20s %-10d %-10.2f %-15s %-20d %-20s %-20s%n",
                         product.getId(),
                         product.getName(),
                         product.getQuantity(),
                         product.getPrice(),
                         product.getCategory(),
-                        product.getInitialQuantity()));
+                        product.getInitialQuantity(),
+                        product.getCurrentDate().toString(),
+                        product.getExpirationDate()));
             }
             System.out.println("Product data saved to file: " + filename);
         } catch (IOException e) {

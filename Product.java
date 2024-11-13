@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public abstract class Product {
     private static int nextId = 1;
     private int id;
@@ -58,13 +60,12 @@ public abstract class Product {
         this.category = category;
     }
 
-    public double getTotalValue() {
-        return quantity * price;
-    }
-
     public abstract void checkExpiry();
+    public abstract LocalDate getExpirationDate();
+    public abstract LocalDate getCurrentDate();
 
     public void displayProductInfo() {
-        System.out.println("ID: "+ id+ " Name: " + name + ", Category: " + category + ", Quantity: " + quantity + ", Price: " + price);
+        System.out.println("ID: "+ id+ " Name: " + name + ", Category: " + category + ", Quantity: " + quantity + ", Price: " + price + ", ExpiryEndDate: " + getExpirationDate());
     }
+
 }
