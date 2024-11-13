@@ -4,7 +4,7 @@ public class PerishableProduct extends Product {
     private LocalDate expirationDate;
 
     public PerishableProduct(String name, int quantity, double price, String category, LocalDate expirationDate) {
-        super(name, quantity, price, category);
+        super(name,quantity, price, category);
         this.expirationDate = expirationDate;
     }
 
@@ -13,9 +13,9 @@ public class PerishableProduct extends Product {
     @Override
     public void checkExpiry() {
         if (expirationDate.isBefore(LocalDate.now())) {
-            System.out.println("Product " + getName() + " expired!");
+            System.out.println("Id"+ getId() + "Product " + getName() + " expired!");
         } else {
-            System.out.println("Product " + getName() + " will expire " + getExpirationDate());
+            System.out.println("Id"+ getId() +"Product " + getName() + " will expire " + getExpirationDate());
         }
     }
 }

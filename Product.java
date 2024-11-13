@@ -1,12 +1,15 @@
 public abstract class Product {
+    private static int nextId = 1;
+    private int id;
     private String name;
     private int quantity;
     private double price;
     private String category;
-    private int InitialQuantity;
+    private int InitialQuantity ;
 
-    // Конструктор
     public Product(String name, int quantity, double price, String category) {
+        this.id = nextId;
+        nextId++;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
@@ -14,7 +17,12 @@ public abstract class Product {
         this.InitialQuantity = quantity;
     }
 
-    // Геттеры и сеттеры
+
+    public int getId(){
+        return id;
+    }
+
+
     public String getName() {
         return name;
     }
@@ -50,15 +58,13 @@ public abstract class Product {
         this.category = category;
     }
 
-    // Метод для получения общей стоимости на складе
     public double getTotalValue() {
         return quantity * price;
     }
 
-    // Абстрактный метод для особых действий (переопределяется в подклассах)
     public abstract void checkExpiry();
 
     public void displayProductInfo() {
-        System.out.println("Name: " + name + ", Category: " + category + ", Quantity: " + quantity + ", Price: " + price);
+        System.out.println("ID: "+ id+ " Name: " + name + ", Category: " + category + ", Quantity: " + quantity + ", Price: " + price);
     }
 }

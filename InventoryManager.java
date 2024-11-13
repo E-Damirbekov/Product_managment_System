@@ -12,38 +12,36 @@ public class InventoryManager implements InventoryActions {
 
     }
 
-    // Метод для добавления нового продукта
     public void addProduct(Product product) {
         products.add(product);
-        transactionHistory.add("Product added: " + product.getName() + " (Category: " + product.getCategory() + ")");
+        transactionHistory.add("|Product added|" + " ID:"+ product.getId() +" Name;"+ product.getName() + " (Category: " + product.getCategory() + ")");
 
     }
 
-    // Метод для обновления продукта по имени
-    public void updateProduct(String name, int quantity, double price, String category) {
+    public void updateProduct(int id,String name, int quantity, double price, String category) {
         for (Product product : products) {
-            if (product.getName().equals(name)) {
+            if (product.getId() == id) {
+                int InQuantity = product.getQuantity();
                 product.setQuantity(quantity);
-                int InQuantity =product.getInitialQuantity();
+                product.setName(name);
                 product.setPrice(price);
                 product.setCategory(category);
-                transactionHistory.add("Обновлен продукт: " + name + " (Количество было: " + InQuantity + "Стало" +quantity + ", Цена: " + price + ")");
+                transactionHistory.add("|Product was Updated| " + "New Name:" + name + " (Amount was: " + InQuantity + " Amount now: " +quantity + ", Price: " + price + ")");
                 return;
             } else {
-                System.out.println("Продукт не найден.");
+                System.out.println("Product wasn't found.");
             }
         }
-//        System.out.println("Продукт не найден.");
+
     }
 
-    public void sellProduct(String name, int soldQuantity) {
+    public void sellProduct(int id, int soldQuantity) {
         for (Product product : products) {
-            if (product.getName().equals(name)) {
+            if (product.getId() == id) {
                 if (product.getQuantity() >= soldQuantity) {
                     product.setQuantity(product.getQuantity() - soldQuantity);
                     double revenue = soldQuantity * product.getPrice();
-                    // Добавляем запись о транзакции
-                    transactionHistory.add("Product sold: " + name + " (Quantity: " + soldQuantity + ", Revenue: " + revenue + ")");
+                    transactionHistory.add("|Product sold| " + "ID:"+ id +" " + "Name " +product.getName() + " (Quantity: " + soldQuantity + ", Revenue: " + revenue + ")");
                     return;
                 } else {
                     System.out.println("Not enough goods in stock.");
@@ -56,26 +54,28 @@ public class InventoryManager implements InventoryActions {
     public void saveProductsToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("==== Product data ====\n");
-            writer.write(String.format("%-20s %-10s %-10s %-15s %-15s%n",
-                    "Name", "Quantity", "Price", "Category", "Initial quantity"));
-            writer.write("-------------------------------------------------------------\n");  // Заголовок
+            writer.write(String.format("%-10s %-20s %-10s %-10s %-15s %-20s%n",
+                    "ID", "Name", "Quantity", "Price", "Category", "Initial Quantity"));
+            writer.write("----------------------------------------------------------------------\n");
+
             for (Product product : products) {
-                writer.write(String.format("%-20s %-10d %-10.2f %-15s %-15d%n",
+                writer.write(String.format("%-10s %-20s %-10d %-10.2f %-15s %-20d%n",
+                        product.getId(),
                         product.getName(),
                         product.getQuantity(),
                         product.getPrice(),
                         product.getCategory(),
                         product.getInitialQuantity()));
             }
-            System.out.println("Product data saved to file:" + filename);
+            System.out.println("Product data saved to file: " + filename);
         } catch (IOException e) {
-            System.out.println("Error saving product data:" + e.getMessage());
+            System.out.println("Error saving product data: " + e.getMessage());
         }
     }
 
     public void saveTransactionHistoryToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("Transaction History:\n");  // Заголовок
+            writer.write("Transaction History:\n");
             for (String transaction : transactionHistory) {
                 writer.write(transaction + "\n");
             }
@@ -85,7 +85,7 @@ public class InventoryManager implements InventoryActions {
         }
     }
 
-    // Метод для отображения всех продуктов
+
     public void displayProducts() {
         System.out.println("List of products:");
         for (Product product : products) {
@@ -93,7 +93,6 @@ public class InventoryManager implements InventoryActions {
         }
     }
 
-    // Метод для проверки и оповещения о низком уровне запасов
     public void checkLowStock(int threshold) {
         for (Product product : products) {
             if (product.getQuantity() < threshold) {
@@ -102,11 +101,12 @@ public class InventoryManager implements InventoryActions {
         }
     }
 
-    // Пример метода для настройки инвентаря (корректировка количества)
-    public void adjustInventory(String name, int newQuantity) {
+    public  void adjustInventory(int id, int addedQuantity) {
         for (Product product : products) {
-            if (product.getName().equals(name)) {
-                product.setQuantity(newQuantity);
+            if (product.getId() == id) {
+                int Quantity = product.getQuantity();
+                product.setQuantity(Quantity + addedQuantity);
+                transactionHistory.add("|Product was reinforced| " + "ID:" + id +" " + "Name: " + product.getName() + ("Amount was: " + Quantity + " Amount added: " +addedQuantity));
                 return;
             }
         }

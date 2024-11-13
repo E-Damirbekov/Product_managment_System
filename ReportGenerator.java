@@ -5,7 +5,6 @@ public class ReportGenerator implements ReportActions{
         this.inventory = inventory;
     }
 
-    // Метод для генерации отчета по продажам
     public void generateSalesReport() {
         double totalRevenue = 0;
 
