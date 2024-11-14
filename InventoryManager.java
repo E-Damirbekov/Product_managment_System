@@ -1,3 +1,4 @@
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,19 +16,19 @@ public class InventoryManager implements InventoryActions {
 
     public void addProduct(Product product) {
         products.add(product);
-        transactionHistory.add("|Product added|" + " ID:"+ product.getId() +" Name:"+ product.getName() + " (Category: " + product.getCategory() + ")");
+        transactionHistory.add("|Product added|" + " ID:" + product.getId() + " Name:" + product.getName() + " (Category: " + product.getCategory() + ")");
 
     }
 
-    public void updateProduct(int id,String name, int quantity, double price, String category) {
+    public void updateProduct(int id, String name, int quantity, double price, String category) {
         for (Product product : products) {
-            if (product.getId() == id) {
+            if (product.getName().equalsIgnoreCase(name)) {
                 int InQuantity = product.getQuantity();
                 product.setQuantity(quantity);
                 product.setName(name);
                 product.setPrice(price);
                 product.setCategory(category);
-                transactionHistory.add("|Product was Updated| " + "New Name:" + name + " (Amount was: " + InQuantity + " Amount now: " +quantity + ", Price: " + price + ")");
+                transactionHistory.add("|Product was Updated| " + "New Name:" + name + " (Amount was: " + InQuantity + " Amount now: " + quantity + ", Price: " + price + ")");
                 return;
             } else {
                 System.out.println("Product wasn't found.");
@@ -36,27 +37,28 @@ public class InventoryManager implements InventoryActions {
 
     }
 
-    public void sellProduct(int id, int soldQuantity) {
+    public void sellProduct(String name, int soldQuantity) {
         for (Product product : products) {
-            if (product.getId() == id) {
+            if (product.getName().equalsIgnoreCase(name)) {
                 if (product.getQuantity() >= soldQuantity) {
                     product.setQuantity(product.getQuantity() - soldQuantity);
                     double revenue = soldQuantity * product.getPrice();
-                    transactionHistory.add("|Product sold| " + "ID:"+ id +" " + "Name " +product.getName() + " (Quantity: " + soldQuantity + ", Revenue: " + revenue + ")");
+                    transactionHistory.add("|Product sold| " + "ID:" + product.getId() + " " + "Name " + product.getName() + " (Quantity: " + soldQuantity + ", Revenue: " + revenue + ")");
                     return;
                 } else {
                     System.out.println("Not enough goods in stock.");
                     return;
                 }
             }
-        }System.out.println("Product not found.");
+        }
+        System.out.println("Product not found.");
     }
 
     public void saveProductsToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("==== Product data ====\n");
             writer.write(String.format("%-10s %-20s %-10s %-10s %-15s %-20s %-20s %-20s%n",
-                    "ID", "Name", "Quantity", "Price", "Category", "Initial Quantity","ExpiryStartDate","ExpiryEndDate"));
+                    "ID", "Name", "Quantity", "Price", "Category", "Initial Quantity", "ExpiryStartDate", "ExpiryEndDate"));
             writer.write("------------------------------------------------------------------------------------------------------\n");
 
             for (Product product : products) {
@@ -84,7 +86,7 @@ public class InventoryManager implements InventoryActions {
             }
             System.out.println("Transaction history saved to file: " + filename);
         } catch (IOException e) {
-            System.out.println("Error saving transaction history: "+ e.getMessage());
+            System.out.println("Error saving transaction history: " + e.getMessage());
         }
     }
 
@@ -104,21 +106,44 @@ public class InventoryManager implements InventoryActions {
         }
     }
 
-    public  void adjustInventory(int id, int addedQuantity) {
+    public void adjustInventory(String name, int addedQuantity) {
         for (Product product : products) {
-            if (product.getId() == id) {
+            if (product.getName().equalsIgnoreCase(name)) {
                 int Quantity = product.getQuantity();
                 product.setQuantity(Quantity + addedQuantity);
-                transactionHistory.add("|Product was reinforced| " + "ID:" + id +" " + "Name: " + product.getName() + ("Amount was: " + Quantity + " Amount added: " +addedQuantity));
+                transactionHistory.add("|Product was reinforced| " + "ID:" + product.getId() + " " + "Name: " + product.getName() + ("Amount was: " + Quantity + " Amount added: " + addedQuantity));
                 return;
             }
         }
         System.out.println("Product not found.");
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+
+    public void searchProducts(String searchName) {
+        for (Product product : products) {
+            if (product.getName().equalsIgnoreCase(searchName)) {
+                System.out.println("Product found: " + "ID: " + product.getId() + "Name: " + product.getName() + " (Category: " + product.getCategory() + ")");
+            }
+        }
+    }
+
+    public void deleteProduct(String name) {
+        boolean productFound = false;
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            if (product.getName().equalsIgnoreCase(name)) {
+                transactionHistory.add("|Product deleted| ID:" + product.getId() + " Name: " + product.getName());
+                products.remove(i);
+                productFound = true;
+                System.out.println("Product '" + name + "' deleted successfully.");
+                break;
+            }
+        }
+        if (!productFound) {
+            System.out.println("Product '" + name + "' not found.");
+        }
     }
 
 
 }
+
