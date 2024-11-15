@@ -1,7 +1,2 @@
 Transaction History:
-|Product added| ID:2 Name:Rice (Category: Grains)
-|Product added| ID:1 Name:Mik (Category: Dairy)
-|Product added| ID:3 Name:potato (Category: Grains)
-|Product added| ID:4 Name:tomato (Category: Grains)
-|Product sold| ID:1 Name Mik (Quantity: 1, Revenue: 1.5)
-|Product was reinforced| ID:2 Name: RiceAmount was: 50 Amount added: 23
+|Product added| ID:1 Name:123 (Category: 123)

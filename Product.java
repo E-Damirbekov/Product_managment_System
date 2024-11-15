@@ -40,6 +40,10 @@ public abstract class Product {
         return InitialQuantity;
     }
 
+    public void setInitialQuantity(int newInitialQuantity){
+        this.InitialQuantity = newInitialQuantity;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }

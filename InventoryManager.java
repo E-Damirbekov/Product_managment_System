@@ -16,25 +16,39 @@ public class InventoryManager implements InventoryActions {
 
     public void addProduct(Product product) {
         products.add(product);
-        transactionHistory.add("|Product added|" + " ID:" + product.getId() + " Name:" + product.getName() + " (Category: " + product.getCategory() + ")");
+        transactionHistory.add("|Product added|" + " ID:" + product.getId() + " Name:" + product.getName() + " (Category: " + product.getCategory() + "Price: "+ product.getPrice() + ")");
 
     }
 
-    public void updateProduct(int id, String name, int quantity, double price, String category) {
-        for (Product product : products) {
-            if (product.getName().equalsIgnoreCase(name)) {
-                int InQuantity = product.getQuantity();
-                product.setQuantity(quantity);
-                product.setName(name);
-                product.setPrice(price);
-                product.setCategory(category);
-                transactionHistory.add("|Product was Updated| " + "New Name:" + name + " (Amount was: " + InQuantity + " Amount now: " + quantity + ", Price: " + price + ")");
+    @Override
+    public void updateProduct(int Id,String name, int quantity, double price, String category, LocalDate date) {
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            if (product.getId() == Id) {
+                products.remove(i);
+
+                if (date != null) {
+                    Product updatedProduct = new PerishableProduct(name, quantity, price, category, date);
+                    this.products.add(updatedProduct);
+                } else {
+
+                    Product updatedProduct = new NonPerishableProduct(name, quantity, price, category);
+                    this.products.add(updatedProduct);
+                }
+
+                transactionHistory.add("|Product was Updated| " +
+                        ", ID: " + Id +
+                        ", New Name: " + name +
+                        ", New Category: " + category +
+                        ", Quantity: " + quantity +
+                        ", Price: " + price +
+                        ", Expiration Date: " + (date != null ? date.toString() : "N/A"));
+
+                System.out.println("Product updated successfully.");
                 return;
-            } else {
-                System.out.println("Product wasn't found.");
             }
         }
-
+        System.out.println("Product with wasn't found.");
     }
 
     public void sellProduct(String name, int soldQuantity) {
@@ -42,6 +56,7 @@ public class InventoryManager implements InventoryActions {
             if (product.getName().equalsIgnoreCase(name)) {
                 if (product.getQuantity() >= soldQuantity) {
                     product.setQuantity(product.getQuantity() - soldQuantity);
+                    System.out.println(product.getQuantity());
                     double revenue = soldQuantity * product.getPrice();
                     transactionHistory.add("|Product sold| " + "ID:" + product.getId() + " " + "Name " + product.getName() + " (Quantity: " + soldQuantity + ", Revenue: " + revenue + ")");
                     return;
@@ -59,7 +74,7 @@ public class InventoryManager implements InventoryActions {
             writer.write("==== Product data ====\n");
             writer.write(String.format("%-10s %-20s %-10s %-10s %-15s %-20s %-20s %-20s%n",
                     "ID", "Name", "Quantity", "Price", "Category", "Initial Quantity", "ExpiryStartDate", "ExpiryEndDate"));
-            writer.write("------------------------------------------------------------------------------------------------------\n");
+            writer.write("----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
             for (Product product : products) {
                 writer.write(String.format("%-10d %-20s %-10d %-10.2f %-15s %-20d %-20s %-20s%n",
@@ -98,13 +113,24 @@ public class InventoryManager implements InventoryActions {
         }
     }
 
-    public void checkLowStock(int threshold) {
+    public void checkLowStock(String name) {
         for (Product product : products) {
-            if (product.getQuantity() < threshold) {
-                System.out.println("Low stock level:" + product.getName());
+            if (product.getName().equalsIgnoreCase(name)) {
+                int threshold = (int) (product.getInitialQuantity() * 0.2);
+                if (product.getQuantity() < threshold) {
+                    System.out.println("Low stock level for product '" + product.getName() +
+                            "': Current quantity: " + product.getQuantity() +
+                            ", Threshold: " + threshold);
+                } else {
+                    System.out.println("Stock level for product '" + product.getName() +
+                            "' is sufficient. Current quantity: " + product.getQuantity());
+                }
+                return;
             }
         }
+        System.out.println("Product with name '" + name + "' not found.");
     }
+
 
     public void adjustInventory(String name, int addedQuantity) {
         for (Product product : products) {
