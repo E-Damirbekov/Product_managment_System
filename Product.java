@@ -72,4 +72,5 @@ public abstract class Product {
         System.out.println("ID: "+ id+ " Name: " + name + ", Category: " + category + ", Quantity: " + quantity + ", Price: " + price + ", ExpiryEndDate: " + getExpirationDate());
     }
 
+
 }

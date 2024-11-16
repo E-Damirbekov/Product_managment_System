@@ -7,10 +7,12 @@ import java.io.*;
 public class InventoryManager implements InventoryActions {
     private ArrayList<Product> products;
     private ArrayList<String> transactionHistory;
+    private ArrayList<String> reportHistory;
 
     public InventoryManager() {
         this.products = new ArrayList<>();
         this.transactionHistory = new ArrayList<>();
+        this.reportHistory = new ArrayList<>();
 
     }
 
@@ -170,6 +172,34 @@ public class InventoryManager implements InventoryActions {
         }
     }
 
+    public void generateSalesReport() {
+        double totalRevenue = 0;
+        for (Product product : products) {
+            int soldQuantity = product.getInitialQuantity() - product.getQuantity();
+            double revenue = soldQuantity * product.getPrice();
+            totalRevenue += revenue;
+
+            reportHistory.add("Product: " + product.getName() +
+                    ", Sold: " + soldQuantity +
+                    ", Revenue: " + revenue);
+        }
+
+        reportHistory.add("Total Revenue: " + totalRevenue);
+    }
+
+    public void saveReportToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("Sales Report:\n");
+
+            for (String report : reportHistory) {
+                writer.write(report + "\n");
+            }
+
+            System.out.println("Report saved to file: " + filename);
+        } catch (IOException e) {
+            System.out.println("Error saving report: " + e.getMessage());
+        }
+    }
 
 }
 

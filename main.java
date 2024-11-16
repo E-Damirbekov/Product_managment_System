@@ -9,7 +9,7 @@ public class main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         InventoryManager inventory = new InventoryManager();
-
+        inventory.checkLowStock("123");
         while (true) {
             printMenu();
             int choice = getUserChoice(scanner);
@@ -45,8 +45,11 @@ public class main {
                     case 8:
                         inventory.displayProducts();
                         break;
-
                     case 9:
+                        System.out.println("Generating sales report...");
+                        reportGeneration(inventory);
+                        break;
+                    case 10:
                         System.out.println("Exit....");
                         scanner.close();
                         System.exit(0);
@@ -74,9 +77,10 @@ public class main {
         System.out.println("4. Search product");
         System.out.println("5. Add amount");
         System.out.println("6. Sell product");
-        System.out.println("7. Check for lower stock");
+        System.out.println("7. Check for low stock");
         System.out.println("8. Display info");
-        System.out.println("9. Exit");
+        System.out.println("9. Generate sales report");
+        System.out.println("10. Exit");
         System.out.print("Select an option: ");
     }
 
@@ -212,6 +216,10 @@ public class main {
         inventory.saveProductsToFile("products_data.txt");
         inventory.saveTransactionHistoryToFile("transaction_history.txt");
     }
+    private static void reportGeneration(InventoryManager inventory) {
+        inventory.generateSalesReport();
+        inventory.saveReportToFile("report_data.txt");
+    }
 
     private static int getPositiveInt(Scanner scanner) {
         while (true) {
@@ -257,5 +265,7 @@ public class main {
                 System.out.println("Invalid date format. Please enter date in d-M-yyyy format:");
             }
         }
+
     }
+
 }

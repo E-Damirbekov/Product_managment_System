@@ -1,2 +1,3 @@
 Transaction History:
-|Product added| ID:1 Name:123 (Category: 123)
+|Product added| ID:1 Name:Cat (Category: 123Price: 123.0)
+|Product added| ID:2 Name:123 (Category: 123Price: 123.0)

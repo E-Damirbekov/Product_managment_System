@@ -52,13 +52,8 @@ The main class for managing inventory. It includes an ArrayList to store `Produc
 - `saveProductsToFile(String filename)`: Saves current product data to a specified file in a formatted table.
 - `saveTransactionHistoryToFile(String filename)`: Saves transaction history to a specified file.
 
-### 5. Class `ReportGenerator`
-This class generates sales reports using an `InventoryManager` instance.
 
-**Methods:**
-- `generateSalesReport()`: Calculates and displays the quantity sold, revenue per product, and total revenue.
-
-### 6. Class `Test`
+### 5. Class `Test`
 The `Test` class is a demo class to check the functionality of the system. It includes examples of adding, updating, selling products, displaying inventory, generating reports, and saving data to files.
 
 ## Usage Instructions

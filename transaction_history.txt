@@ -1,2 +1,5 @@
 Transaction History:
-|Product added| ID:1 Name:123 (Category: 123)
+|Product added| ID:1 Name:123 (Category: 123Price: 123.0)
+|Product added| ID:2 Name:Cat (Category: 13Price: 13.0)
+|Product sold| ID:2 Name Cat (Quantity: 3, Revenue: 39.0)
+|Product sold| ID:1 Name 123 (Quantity: 20, Revenue: 2460.0)
